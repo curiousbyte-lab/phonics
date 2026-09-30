@@ -1,4 +1,4 @@
-# Leo’s Sound Studio
+# Sound Safari
 
 An iPad-friendly phonics practice prototype. Enter an English word, hear the word, tap sound cards, and play a segmented blending demonstration.
 

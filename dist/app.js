@@ -5,7 +5,7 @@ const maps={a:['AE','EY','AA','AO','AH','AX'],e:['EH','IY','IH','AX',''],i:['IH'
 for(const c of 'bdfglmnprstz')maps[c+c]=maps[c];
 let dictionary={},current='this',phones=[],groups=[],run=0,ctx,audioBuffers={},activeSource;
 const normalize=p=>p==='AH0'?'AX':p.replace(/[012]/g,'');
-const audioVersion='blend-slow-v4';
+const audioVersion='sound-safari-v5';
 function align(word,ps){const memo=new Map();function rec(i,j){let key=i+':'+j;if(memo.has(key))return memo.get(key);if(i===word.length)return j===ps.length?{score:0,parts:[]}:null;let best=null;for(let size=1;size<=4 && i+size<=word.length;size++){let text=word.slice(i,i+size);for(const seq of maps[text]||[]){const codes=seq?seq.split(' '):[];if(codes.every((p,k)=>ps[j+k]===p)){let tail=rec(i+size,j+codes.length);if(tail){let score=tail.score+(codes.length?1:5);if(!best||score<best.score)best={score,parts:[{text,codes,start:j},...tail.parts]};}}}}memo.set(key,best);return best;}return rec(0,0)?.parts;}
 function cancel(){run++;if(activeSource){try{activeSource.stop();}catch{}activeSource=null;}if('speechSynthesis'in window)speechSynthesis.cancel();document.querySelectorAll('.active').forEach(x=>x.classList.remove('active'));$('stop').hidden=true;}
 async function unlock(){if(!ctx)ctx=new (window.AudioContext||window.webkitAudioContext)();await ctx.resume();}
