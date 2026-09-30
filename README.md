@@ -47,7 +47,7 @@ The pre-generated dictionary and audio are included, so regeneration is optional
 ## Prototype limitations
 
 - American English dictionary pronunciations, without sentence context.
-- Letter grouping uses rule matching and needs adult review. Unsupported alignments display phonetic symbols.
+- Letter grouping uses rule matching and needs adult review. Unsupported alignments show clearly labeled phonetic symbols instead of presenting them as spelling groups.
 - Unknown words have no phoneme breakdown; browser word speech can still be attempted.
 - Sounds are synthetic. Stop consonants are short contextual samples and may include a brief vowel transition; review all samples before using them as instructional models.
 - Blending plays isolated clips with shorter gaps, then the word; it is not continuous human phonation.
