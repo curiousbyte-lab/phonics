@@ -14,13 +14,19 @@ lib.espeak_SetParameter(1,135,0)
 lib.espeak_Synth.argtypes=[c.c_void_p,c.c_size_t,c.c_uint,c.c_int,c.c_uint,c.c_uint,c.c_void_p,c.c_void_p]
 phon={'AA':'A:','AE':'a','AH':'V','AO':'O:','AW':'aU','AY':'aI','B':'b','CH':'tS','D':'d','DH':'D','EH':'E','ER':'3:','EY':'eI','F':'f','G':'g','HH':'h','IH':'I','IY':'i:','JH':'dZ','K':'k','L':'l','M':'m','N':'n','NG':'N','OW':'oU','OY':'OI','P':'p','R':'r\u02d0','S':'s','SH':'S','T':'t','TH':'T','UH':'U','UW':'u:','V':'v','W':'w','Y':'j','Z':'z','ZH':'Z','AX':'@'}
 p=pathlib.Path(str(pathlib.Path(__file__).resolve().parents[1]/'dist/audio'));p.mkdir(exist_ok=True)
+stops={'B','D','G','JH'}
 for code,sound in phon.items():
- chunks.clear(); sound = sound + ':' if code in ['M','N','NG','L','F','S','SH','TH','DH','V','Z','ZH'] else sound; text=('[[ '+sound+' ]]').encode();buf=c.create_string_buffer(text)
+ # Isolated stop consonants synthesize as silence, so include a short vowel transition.
+ chunks.clear(); sound = sound + ':' if code in ['M','N','NG','L','F','S','SH','TH','DH','V','Z','ZH'] else sound; context=' @' if code in stops else ''; text=('[[ '+sound+context+' ]]').encode();buf=c.create_string_buffer(text)
  result=lib.espeak_Synth(buf,len(text)+1,0,1,0,1|0x100, None,None)
  lib.espeak_Synchronize()
+ pcm=b''.join(chunks)
+ if code in stops:
+  pcm=pcm[:int(rate*.08)*2]
+  if not any(pcm):raise RuntimeError('Could not synthesize an audible '+code+' sample')
  with wave.open(str(p/(code+'.wav')),'wb') as f:
-  f.setnchannels(1);f.setsampwidth(2);f.setframerate(rate);f.writeframes(b''.join(chunks))
- print(code,sum(map(len,chunks)))
+  f.setnchannels(1);f.setsampwidth(2);f.setframerate(rate);f.writeframes(pcm)
+ print(code,len(pcm))
 # Context is needed for sonorants that the synthesizer suppresses in isolation.
 for code,text in [('R','red'),('M','moo'),('N','noon'),('L','loo'),('NG','[[ NI ]]')]:
  chunks.clear();raw=text.encode();buf=c.create_string_buffer(raw);lib.espeak_Synth(buf,len(raw)+1,0,1,0,1|(0x100 if text.startswith('[[') else 0),None,None);lib.espeak_Synchronize()

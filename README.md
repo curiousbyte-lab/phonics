@@ -49,7 +49,7 @@ The pre-generated dictionary and audio are included, so regeneration is optional
 - American English dictionary pronunciations, without sentence context.
 - Letter grouping uses rule matching and needs adult review. Unsupported alignments display phonetic symbols.
 - Unknown words have no phoneme breakdown; browser word speech can still be attempted.
-- Sounds are synthetic. Some consonants are short extracts from context words and need educational/audio review before using them as instructional models.
+- Sounds are synthetic. Stop consonants are short contextual samples and may include a brief vowel transition; review all samples before using them as instructional models.
 - Blending plays isolated clips with shorter gaps, then the word; it is not continuous human phonation.
 - Browser speech and audio unlocking need verification on the target iPad.
 - Inputs are processed in the page and are not uploaded by the app.
