@@ -16,18 +16,14 @@ Open http://localhost:8000. The dist folder can also be deployed to a static hos
 
 The GitHub Actions workflow publishes the contents of `dist/` whenever a commit is pushed to `main`.
 
-1. Create a GitHub repository for this project. The repository can be public or private, subject to GitHub Pages availability for your account.
-2. Make the initial commit, add the repository as this project's `origin`, then push the `main` branch:
+1. In the repository, open **Settings → Pages** and set the build and deployment source to **GitHub Actions**.
+2. Push the `main` branch. For this checkout, the deployment commit is already prepared:
 
    ```sh
-   git add README.md requirements.txt scripts dist .github
-   git commit -m "Prepare GitHub Pages deployment"
-   git remote add origin https://github.com/USERNAME/REPOSITORY.git
    git push -u origin main
    ```
 
-3. In the repository, open **Settings → Pages** and set the build and deployment source to **GitHub Actions**.
-4. Open the **Actions** tab and wait for **Deploy to GitHub Pages** to finish. The published URL appears in the workflow run and in **Settings → Pages**.
+3. Open the **Actions** tab and wait for **Deploy to GitHub Pages** to finish. The published URL appears in the workflow run and in **Settings → Pages**.
 
 Subsequent pushes to `main` deploy automatically. To deploy without a new commit, run **Deploy to GitHub Pages** from the Actions tab using **Run workflow**.
 
