@@ -22,7 +22,7 @@ for code,sound in phon.items():
  lib.espeak_Synchronize()
  pcm=b''.join(chunks)
  if code in stops:
-  pcm=pcm[:int(rate*.08)*2]
+  pcm=pcm[:int(rate*.16)*2]
   if not any(pcm):raise RuntimeError('Could not synthesize an audible '+code+' sample')
  with wave.open(str(p/(code+'.wav')),'wb') as f:
   f.setnchannels(1);f.setsampwidth(2);f.setframerate(rate);f.writeframes(pcm)
