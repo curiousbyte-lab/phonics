@@ -12,6 +12,8 @@ python3 -m http.server 8000 --directory dist
 
 Open http://localhost:8000. The dist folder can also be deployed to a static host. Hosting access rules belong to the host; the app does not implement authentication.
 
+The **Edit words** control lets parents customize the quick-pick word buttons. Separate words with spaces or commas; the list is saved in the current browser's local storage, so it does not automatically sync to other browsers or devices.
+
 ## Deploy to GitHub Pages
 
 The GitHub Actions workflow publishes the contents of `dist/` whenever a commit is pushed to `main`.
